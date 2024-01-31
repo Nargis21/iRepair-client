@@ -1,45 +1,25 @@
 "use client";
 
-import { Button, Checkbox, DatePicker, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { TService } from "./Services";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import auth from "../../firebase/firebase.auth";
-// import moment from "moment/moment";
-// import { useEffect, useState } from "react";
-// import Link from 'next/link'
-// import { useAddBookingMutation } from "../../redux/slices/booking/bookingApi";
-// import { toast } from "react-toastify";
-// import { useRouter } from "next/navigation";
 
+type TFormValues = {
+    serviceName: string;
+    price: string;
+    fullName: string;
+    email: string;
+    phone: string;
+}
 
 const BookingForm = ({ service }: { service: TService }) => {
     console.log(service);
-    // const router = useRouter()
-    // const [agreed, setAgreed] = useState(false);
-    // const handleAgreedChange = (e) => {
-    //     setAgreed(e.target.checked);
-    // };
 
-    // const [user] = useAuthState(auth)
-    // const [addBooking, data] = useAddBookingMutation()
+    const onFinish = async (values: TFormValues) => {
 
-    // const onFinish = async (values) => {
-    //     const options = {
-    //         data: { ...values },
-    //     };
-    //     addBooking(options);
-    // };
-
-    // useEffect(() => {
-    //     if (data?.isSuccess) {
-    //         toast.success(`Booking Successful!`);
-    //         router.push("/user/my-booking")
-    //     }
-    // }, [data, router, user])
-
-    // const onFinishFailed = (errorInfo) => {
-    //     console.log("Failed:", errorInfo);
-    // };
+    };
+    const onFinishFailed = (errorInfo: any) => {
+        console.log("Failed:", errorInfo);
+    };
 
     return (
         <div className="flex justify-center py-12">
@@ -48,19 +28,15 @@ const BookingForm = ({ service }: { service: TService }) => {
                 <Form
                     layout="vertical"
                     name="basic"
-                    // labelCol={{ span: 8 }}
-                    // wrapperCol={{ span: 18 }}
-                    // fullName:user?.displayName, email: user?.email,
-                    initialValues={{ name: service.name, price: service.price, status: 'Pending' }}
-                    // onFinish={onFinish}
-                    // onFinishFailed={onFinishFailed}
+                    initialValues={{ serviceName: service.name, price: service.price, status: 'Pending' }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
                     autoComplete="off"
                     className="p-5"
                 >
-
                     <Form.Item
                         label="Service Name"
-                        name="name"
+                        name="serviceName"
                     >
                         <Input type="text" size="large" disabled className="text-black" />
                     </Form.Item>
@@ -73,6 +49,7 @@ const BookingForm = ({ service }: { service: TService }) => {
                     <Form.Item
                         label="Full Name"
                         name="fullName"
+                        rules={[{ required: true, message: "Please input your name!" }]}
                     >
                         <Input type="text" size="large" className="text-black" />
                     </Form.Item>
@@ -80,43 +57,24 @@ const BookingForm = ({ service }: { service: TService }) => {
                     <Form.Item
                         label="Email"
                         name="email"
+                        rules={[{ required: true, message: "Please input your email address!" }]}
                     >
                         <Input type="email" size="large" className="text-black" />
                     </Form.Item>
 
                     <Form.Item
                         label="Phone Number"
-                        name="phoneNumber"
+                        name="phone"
                         rules={[{ required: true, message: "Please input your Phone Number!" }]}
                     >
                         <Input type="text" size="large" />
                     </Form.Item>
-
-                    {/* <Form.Item
-                        label='Date'
-                        name='date'
-                        rules={[{ required: true, message: "Please select your desired date!" }]}
-                        getValueFromEvent={(onChange) => moment(onChange).format('YYYY-MM-DD')}
-                        getValueProps={(i) => moment(i)}
-                    >
-                        <DatePicker size="large" format='YYYY-MM-DD' style={{ width: '100%' }} />
-                    </Form.Item> */}
                     <Form.Item
                         className="hidden"
                         name='status'
                     >
                         <Input type="hidden" size="large" />
                     </Form.Item>
-
-                    {/* <Checkbox
-                        checked={agreed}
-                        onChange={handleAgreedChange}
-                        className='mb-4'
-                    >
-                        I agree to the <Link href='/cancellation-policy' className="underline">Cancellation Policy</Link>
-                    </Checkbox> */}
-                    {/* disabled={!agreed} */}
-
                     <Form.Item >
                         <Button type="primary" htmlType="submit" block size="large">
                             Confirm Now
