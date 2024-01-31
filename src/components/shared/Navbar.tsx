@@ -48,8 +48,8 @@ const Navbar = ({
     }, []);
 
     return (
-        <Layout className="layout " >
-            <Header className="flex items-center py-8 bg-white">
+        <Layout className="layout shadow-lg" >
+            <Header className="flex items-center py-8 bg-white ">
                 {/* {hasSider && (
                     <Button
                         type="primary"
