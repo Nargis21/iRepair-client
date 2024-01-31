@@ -34,6 +34,7 @@ const Navbar = ({
     const pathname = usePathname();
 
     const [open, setOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
     };
@@ -50,7 +51,7 @@ const Navbar = ({
     return (
         <Layout className="layout shadow-lg" >
             <Header className="flex items-center py-8 bg-white ">
-                {/* {hasSider && (
+                {hasSider && (
                     <Button
                         type="primary"
                         className="lg:hidden mr-2"
@@ -60,7 +61,7 @@ const Navbar = ({
                     >
                         <MenuOutlined />
                     </Button>
-                )} */}
+                )}
                 <Content>
                     <Link href="/">
                         <Title
