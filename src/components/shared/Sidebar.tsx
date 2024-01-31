@@ -1,5 +1,6 @@
 "use client";
 
+import { RootState } from "@/redux/store";
 import { onSidebarClose } from "../../redux/slices/sidebarSlice";
 import { Drawer, Layout, Menu } from "antd";
 import Link from "next/link";
@@ -24,7 +25,7 @@ const Sidebar = ({
         { key: "3", label: "Manage Services", href: "/admin/manage-services" },
     ];
 
-    const open = useSelector((state) => state.sidebar.open)
+    const open = useSelector((state: RootState) => state.sidebar.open)
     const dispatch = useDispatch();
     const pathname = usePathname();
     const getSelectedKey = () => {
