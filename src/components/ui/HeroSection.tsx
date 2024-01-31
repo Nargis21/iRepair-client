@@ -23,7 +23,7 @@ const HeroSection = () => {
                     Welcome to
                     <span className="font-semibold text-black"> iRepair</span>, your
                     one-stop place for all kinds of
-                    <span className="font-semibold text-black">Macbook repairs</span>
+                    <span className="font-semibold text-black"> Macbook repairs </span>
                     and diagnostics.
                 </p>
                 <div>
