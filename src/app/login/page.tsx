@@ -3,6 +3,8 @@ import { Button, Divider } from 'antd';
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 type TForm = {
     email: string;
@@ -10,16 +12,28 @@ type TForm = {
 }
 
 const LoginPage = () => {
-
+    const router = useRouter();
     const { register, formState: { errors }, handleSubmit } = useForm<TForm>();
-    const onSubmit = (data: TForm) => {
+    const onSubmit = async (data: TForm) => {
         console.log(data);
+        const result = await signIn("irepair", {
+            email: data.email,
+            password: data.password,
+            redirect: false,
+            // callbackUrl: "/",
+        });
+
+        console.log(result, "result");
+        if (result?.ok && !result.error) {
+            router.refresh();
+            router.push("/");
+        }
     };
 
     return (
         <div className=''>
 
-            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white lg:w-[40%]  md:w-[60%] w-[90%] mt-12 mx-auto">
+            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white lg:w-[40%]  md:w-[60%] w-[90%] my-12 mx-auto">
                 <form onSubmit={handleSubmit(onSubmit)} >
                     <h1 className='text-2xl text-center'>Login</h1>
 

@@ -3,11 +3,11 @@
 import { showSidebarDrawer } from "@/redux/slices/sidebarSlice";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Typography } from "antd";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
 
 
 const { Header, Content } = Layout;
@@ -16,12 +16,11 @@ const { Title } = Typography;
 const items = [
     { key: "1", label: "Home", href: "/" },
     { key: "2", label: "Services", href: "/services" },
-    { key: "2", label: "Dashboard", href: "/dashboard" },
 ];
 
 const Navbar = ({
-    hasSider
-}: { hasSider: boolean }) => {
+    hasSider, session
+}: { hasSider: boolean, session: boolean }) => {
 
     const pathname = usePathname();
 
@@ -38,6 +37,13 @@ const Navbar = ({
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        const data = await signOut({ redirect: false, callbackUrl: "/login" })
+        router.push(data.url)
+    }
 
     return (
         <Layout className="layout shadow-lg" >
@@ -76,6 +82,35 @@ const Navbar = ({
                             <Link href={item.href}>{item.label}</Link>
                         </Menu.Item>
                     ))}
+
+                    {session ? (
+                        <>
+                            <Menu.Item key={'/dashboard'}>
+                                <Link href={'/dashboard'}>Dashboard</Link>
+                            </Menu.Item>
+                            <Button
+                                className="ml-4"
+                                ghost
+                                size="large"
+                                type="primary"
+                                onClick={handleSignOut}
+                            >
+                                Logout
+                            </Button>
+                        </>
+                    ) : (
+                        <Button
+                            className="ml-4"
+                            ghost
+                            size="large"
+                            type="primary"
+                            onClick={() => {
+                                router.push("/login");
+                            }}
+                        >
+                            Login
+                        </Button>
+                    )}
                 </Menu>
 
                 <Button type="primary" className="lg:hidden inline" onClick={showDrawer}>
@@ -96,7 +131,7 @@ const Navbar = ({
                     </Menu>
                 </Drawer>
             </Header>
-        </Layout>
+        </Layout >
     );
 };
 
