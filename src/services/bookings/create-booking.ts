@@ -1,9 +1,8 @@
 "use server";
-import { TBookingFormValues } from "@/components/ui/BookingForm";
 
 export const createBooking = async (data: any) => {
   try {
-    const res = await fetch("http://localhost:5000/api/v1/issues", {
+    const res = await fetch("http://localhost:3000/api/issues", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

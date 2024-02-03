@@ -1,9 +1,7 @@
-import React from 'react';
-import HeroSection from '@/components/ui/HeroSection';
-import Services from '@/components/ui/FeaturedServices';
+import Services from "@/components/ui/FeaturedServices";
+import HeroSection from "@/components/ui/HeroSection";
 
-
-const page = () => {
+const page = async () => {
   return (
     <div>
       <HeroSection />
