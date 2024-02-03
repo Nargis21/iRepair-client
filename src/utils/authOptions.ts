@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
               email: credentials?.email,
               password: credentials?.password,
             },
-            { projection: { _id: 0 } }
+            { projection: { _id: 0, password: 0 } }
           );
           console.log("data", data);
           if (data) {

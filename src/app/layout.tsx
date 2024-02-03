@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/lib/Providers";
-import Footer from '@/components/shared/Footer';
-import Navbar from '../components/shared/Navbar'
-import { Toaster } from 'sonner';
+import Footer from "@/components/shared/Footer";
+import Navbar from "../components/shared/Navbar";
+import { Toaster } from "sonner";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 
@@ -20,8 +20,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const session = await getServerSession(authOptions)
+  const session: any = await getServerSession(authOptions);
+  // const { username, email, role } = session;
 
   return (
     <Providers>
