@@ -3,6 +3,9 @@ import { Button, Divider } from 'antd';
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { createUser } from "@/services/auth/create-user";
+import { toast } from 'sonner';
+import { signIn } from 'next-auth/react';
 
 type TForm = {
     name: string;
@@ -12,15 +15,28 @@ type TForm = {
 
 const RegisterPage = () => {
 
-    const { register, formState: { errors }, handleSubmit } = useForm<TForm>();
-    const onSubmit = (data: TForm) => {
+    const { register, formState: { errors }, handleSubmit, reset } = useForm<TForm>();
+    const onSubmit = async (data: TForm) => {
         console.log(data);
+        const status = await createUser({ role: "user", ...data })
+        console.log(status);
+        if (status?.data?.acknowledged) {
+            toast.success('Register Successful')
+            await signIn("irepair", {
+                email: data.email,
+                password: data.password,
+                callbackUrl: "/dashboard",
+            });
+            reset()
+        } else {
+            toast.error('Register Failed')
+        }
     };
 
     return (
         <div className=''>
 
-            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white lg:w-[40%]  md:w-[60%] w-[90%] mt-12 mx-auto">
+            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white max-w-xl my-12 mx-auto">
                 <form onSubmit={handleSubmit(onSubmit)} >
                     <h1 className='text-2xl text-center'>Register</h1>
 
@@ -29,7 +45,7 @@ const RegisterPage = () => {
                         <input
                             type="text"
                             placeholder="Full Name"
-                            className="w-full mt-2 p-3 border border-gray-500 rounded-md"
+                            className="w-full mt-2 p-3 border border-gray-500 rounded-md form-control"
                             {...register("name", {
                                 required: {
                                     value: true,
@@ -43,7 +59,7 @@ const RegisterPage = () => {
                             </span>
                         )}
                     </div>
-                    <div className='mb-4 mt-8'>
+                    <div className='mb-4'>
                         <label>Email Address</label>
                         <input
                             type="email"

@@ -12,7 +12,7 @@ type TForm = {
 };
 
 const LoginPage = () => {
-  const router = useRouter();
+  const router = useRouter()
   const {
     register,
     formState: { errors },
@@ -23,15 +23,12 @@ const LoginPage = () => {
     const result = await signIn("irepair", {
       email: data.email,
       password: data.password,
-      //   redirect: false,
-      callbackUrl: "/",
+      // callbackUrl: "/dashboard",
+      redirect: false
     });
-
-    console.log(result, "result");
-    // if (result?.ok && !result.error) {
-    //   router.refresh();
-    //   router.push("/");
-    // }
+    if (result?.ok && !result.error) {
+      router.back()
+    }
   };
 
   return (

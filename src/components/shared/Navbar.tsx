@@ -43,7 +43,7 @@ const Navbar = ({
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut();
+    await signOut({ callbackUrl: "/login" });
     router.push("/login");
   };
 
@@ -64,9 +64,8 @@ const Navbar = ({
         <Content>
           <Link href="/">
             <Title
-              className={`m-0 text-2xl flex items-center ${
-                hasSider && "text-center lg:text-left"
-              }`}
+              className={`m-0 text-2xl flex items-center ${hasSider && "text-center lg:text-left"
+                }`}
             >
               <p className="m-0 ml-2">iRepair</p>
             </Title>

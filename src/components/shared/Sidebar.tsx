@@ -16,13 +16,18 @@ type TState = {
 }
 
 const Sidebar = ({
+    role,
     children,
-}: { children: React.ReactNode }) => {
+}: { children: React.ReactNode, role: string }) => {
 
     const adminItems = [
         { key: "1", label: "Dashboard", href: "/dashboard" },
         { key: "2", label: "Add New Service", href: "/admin/add-service" },
         { key: "3", label: "Manage Services", href: "/admin/manage-services" },
+    ];
+    const userItems = [
+        { key: "1", label: "Dashboard", href: "/dashboard" },
+        { key: "2", label: "My Bookings", href: "/user/my-bookings" },
     ];
 
     const open = useSelector((state: RootState) => state.sidebar.open)
@@ -45,12 +50,16 @@ const Sidebar = ({
                             defaultSelectedKeys={[getSelectedKey()]}
                             selectedKeys={[getSelectedKey()]}
                         >
-                            {
+                            {role === "admin" ? (
                                 adminItems?.map((item) => (
                                     <Menu.Item key={item.key}>
                                         <Link href={item.href}>{item.label}</Link>
                                     </Menu.Item>
-                                ))
+                                ))) : (userItems?.map((item) => (
+                                    <Menu.Item key={item.key}>
+                                        <Link href={item.href}>{item.label}</Link>
+                                    </Menu.Item>
+                                )))
                             }
                         </Menu>
                     </Sider>
