@@ -1,30 +1,31 @@
 import { getToken } from "next-auth/jwt";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-const hybridRoutes = ["/login", "/register"];
-const commonAuthenticatedRoutes = ["/dashboard", "/booking"];
-const userAccesibleRoutes = ["/user/my-bookings"];
+import { NextResponse } from "next/server";
+import {
+  commonAuthenticatedRoutes,
+  hybridRoutes,
+  userAccesibleRoutes,
+} from "./middleware";
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
+  //   console.log(token, "token middleware");
   const { pathname } = request.nextUrl;
 
+  //get the forwarded pathname
+  // const forwardedPathname = request.headers.get("x-forwarded-pathname");
   if (!token) {
     if (hybridRoutes.includes(pathname)) {
       return NextResponse.next();
     }
     if (commonAuthenticatedRoutes.some((route) => pathname.startsWith(route))) {
-      return NextResponse.redirect(
-        `${process.env.SERVER_URL}/login?redirect=${pathname}`
-      );
+      return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
     }
-    return NextResponse.redirect(
-      `${process.env.SERVER_URL}/login?redirect=${pathname}`
-    );
+    return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
   }
 
   const role = token?.role as string;
+  // console.log(role, "role middleware")
   if (
     (token &&
       commonAuthenticatedRoutes.some((route) => pathname.startsWith(route))) ||
@@ -36,18 +37,3 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.redirect(`${process.env.SERVER_URL}`);
 }
-
-export const config = {
-  matcher: [
-    //hybrid routes
-    "/login",
-    "/register",
-    //user routes
-    "/user/:page*",
-    //admin routes
-    "/admin/:page*",
-    //common authenticated routes
-    "/dashboard",
-    "/booking/:page*",
-  ],
-};
