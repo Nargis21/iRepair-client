@@ -23,12 +23,12 @@ const LoginPage = () => {
     const result = await signIn("irepair", {
       email: data.email,
       password: data.password,
-      // callbackUrl: "/dashboard",
-      redirect: false
+      callbackUrl: "/dashboard",
+      // redirect: false
     });
-    if (result?.ok && !result.error) {
-      router.back()
-    }
+    // if (result?.ok && !result.error) {
+    //   router.back()
+    // }
   };
 
   return (

@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath, revalidateTag } from "next/cache";
+
 export const createService = async (data: any) => {
   try {
     const res = await fetch("http://localhost:3000/api/services", {
@@ -11,6 +13,8 @@ export const createService = async (data: any) => {
       cache: "no-cache",
     });
     const status = await res.json();
+    revalidatePath("/services");
+    revalidateTag("services");
     return status;
   } catch (err) {
     return { success: false };

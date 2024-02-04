@@ -35,7 +35,7 @@ const Sidebar = ({
     const pathname = usePathname();
     const getSelectedKey = () => {
         return (
-            adminItems.find((item) => item.href === pathname)?.key || ""
+            role !== "admin" ? userItems.find((item) => item.href === pathname)?.key || "" : adminItems.find((item) => item.href === pathname)?.key || ""
         )
     };
 

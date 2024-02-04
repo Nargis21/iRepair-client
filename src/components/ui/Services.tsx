@@ -16,9 +16,12 @@ const Service = ({ services }: { services: TService[] }) => {
                         <h1 className="text-2xl font-semibold">{service?.name}</h1>
                         <p className="my-3">{service?.description}</p>
                         <p><span className="font-semibold">Price:</span> {service?.price}</p>
-                        <p className="my-5">
-                            {service?.devices.map((device) => <span className="bg-blue-200 rounded-full px-3 py-2 mr-1" key={device}>{device}</span>)}
+                        <p className="my-5 bg-blue-200 rounded-full px-3 py-2 ">
+                            {service.devices}
                         </p>
+                        {/* <p className="my-5">
+                            {service?.devices.map((device) => <span className="bg-blue-200 rounded-full px-3 py-2 mr-1" key={device}>{device}</span>)}
+                        </p> */}
                         <Link href={`/booking/${service._id}`} className="mt-4 w-full text-right">
                             <Button type="primary">Book Now</Button>
                         </Link>

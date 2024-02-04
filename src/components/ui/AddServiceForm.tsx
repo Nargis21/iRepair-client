@@ -15,19 +15,9 @@ export type TAddServiceFormValues = {
 const AddServiceForm = () => {
     const [form] = Form.useForm();
     const onFinish = async (values: TAddServiceFormValues) => {
-        const fakeData = {
-            name: "Screen Repair",
-            description: "Replace broken screens",
-            devices: [
-                "Smartphone",
-                "Laptop",
-                "Tablet"
-            ],
-            price: 100.00
-        }
-        const status = await createService(fakeData)
-        console.log(status);
-        if (status.success) {
+        const status = await createService(values)
+
+        if (status?.data?.acknowledged) {
             toast.success('Service added!')
             form.resetFields();
         } else {

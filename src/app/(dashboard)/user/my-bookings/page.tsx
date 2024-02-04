@@ -1,10 +1,19 @@
-import React from 'react';
+import MyBookingTable from '@/components/ui/MyBookingTable';
+import { TSession } from '@/types/globalTypes';
+import { authOptions } from '@/utils/authOptions';
+import { getServerSession } from 'next-auth';
 
-const MyBookingsPage = () => {
+const MyBookingsPage = async () => {
+    const session = await getServerSession(authOptions) as TSession
+    const res = await fetch(`${process.env.SERVER_URL}/api/bookings?email=${session.email}`, {
+        cache: "no-cache",
+        next: {
+            tags: ["bookings"],
+        },
+    });
+    const data = await res.json();
     return (
-        <div>
-            <h1>My Bookings</h1>
-        </div>
+        <MyBookingTable bookings={data.data}></MyBookingTable>
     );
 };
 

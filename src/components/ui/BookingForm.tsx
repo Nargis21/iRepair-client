@@ -4,30 +4,28 @@ import { Button, Form, Input } from "antd";
 import { TService } from "./Services";
 import { createBooking } from "@/services/bookings/create-booking";
 import { toast } from "sonner";
+import { TSession } from "@/types/globalTypes";
+import { useRouter } from "next/navigation";
+
 
 export type TBookingFormValues = {
-    serviceName: string;
-    price: string;
-    fullName: string;
-    email: string;
-    phone: string;
+    serviceName?: string;
+    price?: string;
+    fullName?: string;
+    email?: string;
+    phone?: string;
 }
 
-const BookingForm = ({ service }: { service: TService }) => {
+const BookingForm = ({ service, session }: { service: TService, session: TSession }) => {
     const [form] = Form.useForm();
-    const fakeData = {
-        title: "Screen not working",
-        description: "The screen on my smartphone is not responding",
-        device: "Smartphone",
-        // "status": "pending",
-        userId: "65b0e6110b5b831f550df1e8",
-        serviceId: "65b0e60f0b5b831f550df1e6"
-    }
+    const router = useRouter()
     const onFinish = async (values: TBookingFormValues) => {
-        const status = await createBooking(fakeData)
-        if (status.success) {
+        const status = await createBooking(values)
+
+        if (status?.data?.acknowledged) {
             toast.success('Booking Successful')
             form.resetFields();
+            router.push("/user/my-bookings")
         } else {
             toast.error('Booking Failed')
         }
@@ -43,7 +41,7 @@ const BookingForm = ({ service }: { service: TService }) => {
                 <Form
                     layout="vertical"
                     name="basic"
-                    initialValues={{ serviceName: service.name, price: service.price, status: 'Pending' }}
+                    initialValues={{ serviceName: service.name, price: service.price, fullName: session.name, email: session.email, status: 'Pending', }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
@@ -65,17 +63,16 @@ const BookingForm = ({ service }: { service: TService }) => {
                     <Form.Item
                         label="Full Name"
                         name="fullName"
-                        rules={[{ required: true, message: "Please input your name!" }]}
+
                     >
-                        <Input type="text" size="large" className="text-black" />
+                        <Input type="text" size="large" disabled className="text-black" />
                     </Form.Item>
 
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: "Please input your email address!" }]}
                     >
-                        <Input type="email" size="large" className="text-black" />
+                        <Input type="email" size="large" disabled className="text-black" />
                     </Form.Item>
 
                     <Form.Item

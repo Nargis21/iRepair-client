@@ -17,9 +17,7 @@ const RegisterPage = () => {
 
     const { register, formState: { errors }, handleSubmit, reset } = useForm<TForm>();
     const onSubmit = async (data: TForm) => {
-        console.log(data);
         const status = await createUser({ role: "user", ...data })
-        console.log(status);
         if (status?.data?.acknowledged) {
             toast.success('Register Successful')
             await signIn("irepair", {

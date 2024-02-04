@@ -3,7 +3,9 @@ import Services from "./Services";
 const FeaturedServices = async () => {
   const res = await fetch("http://localhost:3000/api/services", {
     cache: "force-cache",
-    next: { revalidate: 1 },
+    next: {
+      tags: ["services"],
+    },
   });
   const data = await res.json();
   const latestServices = data.data.slice(0, 6);
