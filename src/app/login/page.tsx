@@ -1,10 +1,9 @@
 "use client";
 import { Button, Divider } from "antd";
-import React from "react";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 type TForm = {
   email: string;
@@ -12,7 +11,9 @@ type TForm = {
 };
 
 const LoginPage = () => {
-  const router = useRouter()
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+
   const {
     register,
     formState: { errors },
@@ -20,15 +21,11 @@ const LoginPage = () => {
   } = useForm<TForm>();
   const onSubmit = async (data: TForm) => {
     console.log(data);
-    const result = await signIn("irepair", {
+    await signIn("irepair", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/dashboard",
-      // redirect: false
+      callbackUrl: redirect ?? "/dashboard",
     });
-    // if (result?.ok && !result.error) {
-    //   router.back()
-    // }
   };
 
   return (

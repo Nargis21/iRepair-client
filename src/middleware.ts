@@ -8,20 +8,23 @@ const userAccesibleRoutes = ["/user/my-bookings"];
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
-  //   console.log(token, "token middleware");
   const { pathname } = request.nextUrl;
+
   if (!token) {
     if (hybridRoutes.includes(pathname)) {
       return NextResponse.next();
     }
     if (commonAuthenticatedRoutes.some((route) => pathname.startsWith(route))) {
-      return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
+      return NextResponse.redirect(
+        `${process.env.SERVER_URL}/login?redirect=${pathname}`
+      );
     }
-    return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
+    return NextResponse.redirect(
+      `${process.env.SERVER_URL}/login?redirect=${pathname}`
+    );
   }
 
   const role = token?.role as string;
-  // console.log(role, "role middleware")
   if (
     (token &&
       commonAuthenticatedRoutes.some((route) => pathname.startsWith(route))) ||
