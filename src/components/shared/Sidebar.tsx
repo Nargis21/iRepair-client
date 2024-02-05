@@ -22,7 +22,6 @@ const Sidebar = ({
 
     const adminItems = [
         { key: "1", label: "Dashboard", href: "/dashboard" },
-        { key: "2", label: "Add New Service", href: "/admin/add-service" },
         { key: "3", label: "Manage Services", href: "/admin/manage-services" },
     ];
     const userItems = [

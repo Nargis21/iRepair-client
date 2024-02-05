@@ -1,7 +1,7 @@
 import Services from "@/components/ui/Services";
 
 const ServicePage = async () => {
-  const res = await fetch("http://localhost:3000/api/services", {
+  const res = await fetch(`${process.env.SERVER_URL}/api/services`, {
     cache: "force-cache",
   });
   const data = await res.json();

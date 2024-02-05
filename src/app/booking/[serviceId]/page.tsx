@@ -11,7 +11,7 @@ type TParams = {
 const BookingPage = async ({ params }: { params: TParams }) => {
   const session = await getServerSession(authOptions) as TSession
   const serviceId = params.serviceId;
-  const res = await fetch(`http://localhost:3000/api/services/${serviceId}`, {
+  const res = await fetch(`${process.env.SERVER_URL}/api/services/${serviceId}`, {
     cache: "no-store",
   });
   const service = await res.json();

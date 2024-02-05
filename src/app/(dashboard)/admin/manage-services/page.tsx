@@ -1,10 +1,16 @@
+import ManageServiceTable from '@/components/ui/ManageServiceTable';
 import React from 'react';
 
-const ManageServicePage = () => {
+const ManageServicePage = async () => {
+    const res = await fetch(`${process.env.SERVER_URL}/api/services`, {
+        cache: "no-cache",
+        next: {
+            tags: ["services"],
+        },
+    });
+    const data = await res.json();
     return (
-        <div className="bg-gray-200 lg:p-6 md:p-6 p-4 rounded-xl lg:min-h-screen">
-            <h1>Manage Service</h1>
-        </div>
+        <ManageServiceTable services={data.data}></ManageServiceTable>
     );
 };
 

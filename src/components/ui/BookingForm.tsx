@@ -9,11 +9,11 @@ import { useRouter } from "next/navigation";
 
 
 export type TBookingFormValues = {
-    serviceName?: string;
-    price?: string;
-    fullName?: string;
-    email?: string;
-    phone?: string;
+    serviceName: string;
+    price: string;
+    fullName: string;
+    email: string;
+    phone: string;
 }
 
 const BookingForm = ({ service, session }: { service: TService, session: TSession }) => {
@@ -22,7 +22,7 @@ const BookingForm = ({ service, session }: { service: TService, session: TSessio
     const onFinish = async (values: TBookingFormValues) => {
         const status = await createBooking(values)
 
-        if (status?.data?.acknowledged) {
+        if (status.message === "success") {
             toast.success('Booking Successful')
             form.resetFields();
             router.push("/user/my-bookings")

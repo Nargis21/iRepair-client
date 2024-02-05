@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { createUser } from "@/services/auth/create-user";
 import { toast } from 'sonner';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 type TForm = {
     name: string;
@@ -34,11 +35,11 @@ const RegisterPage = () => {
     return (
         <div className=''>
 
-            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white max-w-xl my-12 mx-auto">
+            <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white max-w-lg my-12 mx-auto">
+                <h1 className='text-2xl text-center mb-8'>Register</h1>
                 <form onSubmit={handleSubmit(onSubmit)} >
-                    <h1 className='text-2xl text-center'>Register</h1>
 
-                    <div className='mb-4 mt-8'>
+                    <div className='mb-4 w-full'>
                         <label>Full Name</label>
                         <input
                             type="text"
@@ -57,7 +58,7 @@ const RegisterPage = () => {
                             </span>
                         )}
                     </div>
-                    <div className='mb-4'>
+                    <div className='mb-4 w-full'>
                         <label>Email Address</label>
                         <input
                             type="email"
@@ -85,7 +86,7 @@ const RegisterPage = () => {
                             </span>
                         )}
                     </div>
-                    <div className='mb-4'>
+                    <div className='mb-4 w-full'>
                         <label>Password</label>
                         <input
 
@@ -118,6 +119,12 @@ const RegisterPage = () => {
 
                     <Button type='primary' block size='large' htmlType='submit'>Register</Button>
                 </form>
+                <p className="text-sm pt-2 font-semibold ">
+                    Already have a account?
+                    <Link className="text-sky-500 underline ml-2" href="/login">
+                        Please Login
+                    </Link>
+                </p>
                 <Divider plain >or</Divider>
                 <Button type='primary' block size='large' htmlType='submit' className='mb-4 lg:mb-0 flex items-center justify-center gap-2 font-semibold w-full text-black' ghost>
                     <Image
