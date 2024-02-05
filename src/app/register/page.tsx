@@ -3,7 +3,7 @@ import { Button, Divider } from 'antd';
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { createUser } from "@/services/auth/create-user";
+import { createUser } from "@/services/users/create-user";
 import { toast } from 'sonner';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';

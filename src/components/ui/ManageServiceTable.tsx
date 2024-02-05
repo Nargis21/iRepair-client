@@ -5,8 +5,9 @@ import { DeleteFilled, PlusOutlined, EditOutlined } from '@ant-design/icons'
 import { useRouter } from "next/navigation";
 import { TAddServiceFormValues } from "./AddServiceForm";
 import { deleteService } from "@/services/services/delete-service";
+import { AnyObject } from "antd/es/_util/type";
 
-const ManageServiceTable = ({ services }: { services: TAddServiceFormValues }) => {
+const ManageServiceTable = ({ services }: { services: TAddServiceFormValues[] }) => {
     const router = useRouter()
 
     const handleDeleteWithConfirmation = (id: string) => {
@@ -41,7 +42,7 @@ const ManageServiceTable = ({ services }: { services: TAddServiceFormValues }) =
         {
             title: 'No.',
             key: 'no',
-            render: (text, record, index) => index + 1 + (currentPage - 1) * pageSize,
+            render: (text: any, record: AnyObject, index: number) => index + 1 + (currentPage - 1) * pageSize,
         },
 
         {
@@ -67,7 +68,7 @@ const ManageServiceTable = ({ services }: { services: TAddServiceFormValues }) =
         {
             title: "Action",
             key: "action",
-            render: (record) => {
+            render: (record: AnyObject) => {
                 return (
                     <div>
                         <Button className="text-xl" type="link" onClick={() => router.push(`/admin/edit-service/${record._id}`)}><EditOutlined /></Button>

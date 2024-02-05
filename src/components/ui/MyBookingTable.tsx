@@ -2,8 +2,9 @@
 import { Table } from "antd";
 import { useState } from "react";
 import { TBookingFormValues } from "./BookingForm";
+import { AnyObject } from "antd/es/_util/type";
 
-const MyBookingTable = ({ bookings }: { bookings: TBookingFormValues }) => {
+const MyBookingTable = ({ bookings }: { bookings: TBookingFormValues[] }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
@@ -17,7 +18,7 @@ const MyBookingTable = ({ bookings }: { bookings: TBookingFormValues }) => {
         {
             title: 'No.',
             key: 'no',
-            render: (text, record, index) => index + 1 + (currentPage - 1) * pageSize,
+            render: (text: any, record: AnyObject, index: number) => index + 1 + (currentPage - 1) * pageSize,
         },
         {
             title: "Service",

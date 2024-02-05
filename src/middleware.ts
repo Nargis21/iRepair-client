@@ -15,9 +15,13 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
     if (commonAuthenticatedRoutes.some((route) => pathname.startsWith(route))) {
-      return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
+      return NextResponse.redirect(
+        `${process.env.SERVER_URL}/login?redirect=${pathname}`
+      );
     }
-    return NextResponse.redirect(`${process.env.SERVER_URL}/login`);
+    return NextResponse.redirect(
+      `${process.env.SERVER_URL}/login?redirect=${pathname}`
+    );
   }
 
   const role = token?.role as string;
