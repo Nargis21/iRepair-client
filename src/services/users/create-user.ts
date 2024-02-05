@@ -2,7 +2,7 @@
 
 export const createUser = async (data: any) => {
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/api/auth/register`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

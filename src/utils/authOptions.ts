@@ -1,4 +1,3 @@
-import { db } from "@/lib/db-connect";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -19,17 +18,21 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req): Promise<any> {
         try {
-          const mongodb = await db();
-          const data = await mongodb.collection("users").findOne(
+          const res = await fetch(
+            `${process.env.BACKEND_URL}/api/v1/auth/login`,
             {
-              email: credentials?.email,
-              password: credentials?.password,
-            },
-            { projection: { _id: 0, password: 0 } }
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(credentials),
+            }
           );
-          console.log("data", data);
-          if (data) {
+          const { data } = await res.json();
+
+          if (res.ok && data) {
             return {
+              // token: user.data.accessToken,
               ...data,
             };
           }
@@ -58,12 +61,6 @@ export const authOptions: AuthOptions = {
         ...token,
       };
     },
-  },
-  session: {
-    strategy: "jwt",
-  },
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {

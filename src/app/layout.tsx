@@ -21,14 +21,18 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session: any = await getServerSession(authOptions);
+  // console.log("session", session);
   // const { username, email, role } = session;
+  // console.log("username", username);
 
   return (
     <Providers>
       <html lang="en">
         <body className={inter.className}>
           <Toaster />
-          <Navbar hasSider session={session ? true : false} />
+          <Navbar hasSider 
+          // session={session ? true : false}
+           />
           {children}
           <Footer />
         </body>

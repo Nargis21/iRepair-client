@@ -1,9 +1,10 @@
 "use client";
 
 import { showSidebarDrawer } from "@/redux/slices/sidebarSlice";
+import { getSession } from "@/services/getSession";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout, Menu, Typography } from "antd";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,12 +20,14 @@ const items = [
 
 const Navbar = ({
   hasSider,
-  session,
-}: {
+}: // session,
+{
   hasSider: boolean;
-  session: boolean;
+  // session: boolean;
 }) => {
   const pathname = usePathname();
+  const session = useSession();
+  
 
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
@@ -64,8 +67,9 @@ const Navbar = ({
         <Content>
           <Link href="/">
             <Title
-              className={`m-0 text-2xl flex items-center ${hasSider && "text-center lg:text-left"
-                }`}
+              className={`m-0 text-2xl flex items-center ${
+                hasSider && "text-center lg:text-left"
+              }`}
             >
               <p className="m-0 ml-2">iRepair</p>
             </Title>
