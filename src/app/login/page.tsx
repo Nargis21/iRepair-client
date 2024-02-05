@@ -1,9 +1,9 @@
 "use client";
-import { Button, Divider } from "antd";
+import { Button, Divider, Input } from "antd";
 import React from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
@@ -13,7 +13,6 @@ type TForm = {
 };
 
 const LoginPage = () => {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect")
   const {
@@ -33,9 +32,9 @@ const LoginPage = () => {
     <div className="lg:p-10 md:p-6 p-2 shadow-xl bg-white max-w-lg my-12 mx-auto">
       <h1 className="text-2xl mb-8 text-center">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <label>Email Address</label>
-          <input
+          <Input
             type="email"
             placeholder="Email Address"
             className="w-full mt-2 p-3 border border-gray-500 rounded-md"
@@ -63,7 +62,7 @@ const LoginPage = () => {
         </div>
         <div className="mb-4 w-full">
           <label>Password</label>
-          <input
+          <Input
             type="password"
             placeholder="Password"
             className="w-full mt-2 p-3 border border-gray-500 rounded-md"

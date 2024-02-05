@@ -1,5 +1,5 @@
 'use client'
-import { Button, Divider } from 'antd';
+import { Button, Divider, Input } from 'antd';
 import React from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -41,7 +41,7 @@ const RegisterPage = () => {
 
                     <div className='mb-4 w-full'>
                         <label>Full Name</label>
-                        <input
+                        <Input
                             type="text"
                             placeholder="Full Name"
                             className="w-full mt-2 p-3 border border-gray-500 rounded-md form-control"
@@ -60,7 +60,7 @@ const RegisterPage = () => {
                     </div>
                     <div className='mb-4 w-full'>
                         <label>Email Address</label>
-                        <input
+                        <Input
                             type="email"
                             placeholder="Email Address"
                             className="w-full mt-2 p-3 border border-gray-500 rounded-md"
@@ -88,7 +88,7 @@ const RegisterPage = () => {
                     </div>
                     <div className='mb-4 w-full'>
                         <label>Password</label>
-                        <input
+                        <Input
 
                             type="password"
                             placeholder="Password"
